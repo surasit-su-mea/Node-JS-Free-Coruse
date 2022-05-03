@@ -4,6 +4,7 @@ const debug = require('debug');
 const morgan = require('morgan');
 const path = require('path');
 const res = require('express/lib/response');
+const products = require('./data/products.json');
 const productRouter = express.Router();
 
 const app = express();
@@ -17,7 +18,9 @@ app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
 productRouter.route("/").get((req, res) => {
-    res.render("products");
+    res.render("products",
+        products,
+    );
 });
 
 productRouter.route("/1").get((req, res) => {
