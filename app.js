@@ -3,16 +3,32 @@ const chalk = require('chalk');
 const debug = require('debug');
 const morgan = require('morgan');
 const path = require('path');
+const res = require('express/lib/response');
+const productRouter = express.Router();
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(morgan('combined'));
 
-app.use(express.static(path.join(__dirname,"/public/")));
+app.use(express.static(path.join(__dirname, "/public/")));
 
-app.get("/",(req,res) =>{
+app.set("views", "./src/views");
+app.set("view engine", "ejs");
 
-    res.send('Hello borntoDev FUNG Version 3');
+productRouter.route("/").get((req, res) => {
+    res.send("Hello !! I'm Product");
+});
+
+productRouter.route("/1").get((req, res) => {
+    res.send("Hello !! I'm Product 1");
+});
+
+app.use("/products", productRouter);
+
+app.get("/", (req, res) => {
+
+    res.render('index', { username: 'FUNG FUNG', customers: ["AAAAA", "BBBBB", "CCCCC"] });
 
 })
 
